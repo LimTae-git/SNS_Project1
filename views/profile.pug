@@ -1,0 +1,36 @@
+doctype
+
+html
+  head
+    meta(charset='UTF-8')
+    title = title
+    meta(name='viewport' content='width=device-width, user-scalable=no')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    link(rel='stylesheet' href='/main.css')
+  body
+    .container
+      .profile
+        if user && user.id
+          .user-name= '안녕하세요! ' + user.nick + '님'
+          .half
+            div 팔로잉
+            .count.following-count= user.Followings && user.Followings.length || 0
+          .half
+            div 팔로워
+            .count.follower-count= user.Followers && user.Followers.length || 0
+          input#my-id(type='hidden' value=user.id)
+          a#my-profile.btn(href='/') 홈으로
+          a#modify.btn(href='/modify') 프로필수정
+          a#logout.btn(href='/auth/logout') 로그아웃
+      .timeline
+        .followings.half
+          h2 팔로잉 목록
+          if user.Followings
+            for following in user.Followings
+              div= following.nick
+        .follower.half
+          h2 팔로워 목록
+          if user.Followers
+            for follower in user.Followers
+              div= follower.nick
+      block content
